@@ -975,7 +975,10 @@ static int eat_headers(FILE *tcp_file, int *chunked, int *content_length,
 				"setting time, time difference is %d\n",
 						(int)(tim-now));
 				}
-				stime(&tim);
+				struct timespec ts;
+				ts.tv_sec = tim;
+				ts.tv_nsec = 0;
+				clock_settime(CLOCK_REALTIME, &ts);
 			}
 		}
 

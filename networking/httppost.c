@@ -493,7 +493,10 @@ int httppost_main(int argc, char *argv[])
 			fprintf(stderr,
 				"setting time, time difference is %ld\n",
 				(long)server_time-now.tv_sec);
-			stime(&server_time);
+			struct timespec ts;
+			ts.tv_sec = server_time;
+			ts.tv_nsec = 0;
+			clock_settime(CLOCK_REALTIME, &ts);
 			if (atlas_id)
 			{
 				printf(
